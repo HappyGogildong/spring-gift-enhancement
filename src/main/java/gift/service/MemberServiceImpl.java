@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService {
         this.jwtTokenHandler = jwtTokenHandler;
     }
 
-    public Member memberWithEncodedPassword(RegisterRequestDto registerRequestDto) {
+    public Member getMemberWithEncodedPassword(RegisterRequestDto registerRequestDto) {
         String encodedPassword = BCrypt.hashpw(registerRequestDto.password(), BCrypt.gensalt());
         Member member = new Member();
         member.setEmail(registerRequestDto.email());
@@ -35,7 +35,6 @@ public class MemberServiceImpl implements MemberService {
         member.setMemberRole(
             MemberRole.valueOf(registerRequestDto.memberRole()));
         return member;
-
     }
 
     @Transactional
@@ -46,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
             throw new EmailDuplicationException("중복된 이메일입니다");
         }
 
-        Member member = memberWithEncodedPassword(registerRequestDto);
+        Member member = getMemberWithEncodedPassword(registerRequestDto);
         memberRepository.save(member);
 
         return new TokenResponseDto(jwtTokenHandler.createToken(member));
