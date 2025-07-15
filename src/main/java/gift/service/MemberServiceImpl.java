@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public TokenResponseDto registerAndReturnToken(RegisterRequestDto registerRequestDto) {
 
-        if (memberRepository.findMemberByEmail(registerRequestDto.email()).isPresent()) {
+        if (memberRepository.findMemberByEmail(registerRequestDto.email()) != null) {
             throw new EmailDuplicationException("중복된 이메일입니다");
         }
 
@@ -52,8 +52,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public TokenResponseDto login(LoginRequestDto loginRequest) {
-        Member storedMember = memberRepository.findMemberByEmail(loginRequest.email())
-            .orElseThrow(() -> new MemberNotFoundException("사용자를 찾을 수 없습니다"));
+        Member storedMember = memberRepository.findMemberByEmail(loginRequest.email());
+        if (storedMember == null) {
+            throw new MemberNotFoundException("사용자를 찾을 수 없습니다");
+        }
 
         if (!BCrypt.checkpw(loginRequest.password(), storedMember.getPassword())) {
             throw new InvalidPasswordException("비밀번호가 다릅니다");

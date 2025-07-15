@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "member")
@@ -17,10 +18,11 @@ public class Member {
     private Long id;
 
     @Column(nullable = false)
+    @Pattern(regexp = "^(user|manager)$", message = "역할은 'user' 또는 'manager'만 가능합니다.")
     private String memberRole;
 
     @Column(unique = true, nullable = false)
-    @Email
+    @Email(message = "유효한 이메일 형식이어야 합니다")
     private String email;
 
     @Column(nullable = false)
