@@ -23,8 +23,8 @@ public class JwtTokenHandler {
             .header()
             .add("typ", "JWT")
             .and()
-            .claim("userRole", member.userRole())
-            .claim("email", member.email())
+            .claim("userRole", member.getUserRole())
+            .claim("email", member.getEmail())
             .issuedAt(new Date(System.currentTimeMillis()))
             .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) //30분
             .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))

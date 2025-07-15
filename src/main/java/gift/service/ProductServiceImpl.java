@@ -24,15 +24,15 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductResponseDto productToResponseDto(Product product) {
         return new ProductResponseDto(
-            product.productId(),
-            product.name(),
-            product.price(),
-            product.imageURL());
+            product.getId(),
+            product.getName(),
+            product.getPrice(),
+            product.getImageURL());
     }
 
 
     public Product getProduct(long productId) {
-        if (!containsProduct(productId)) {
+        if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("상품을 찾을 수 없습니다");
         }
         return productRepository.findById(productId).orElseThrow();
@@ -48,12 +48,11 @@ public class ProductServiceImpl implements ProductService {
             throw new KakaoApproveException(
                 "\"카카오\" 문구가 들어간 상품은 담당MD와 협의 후 사용할 수 있습니다");
         }
-        Product product = new Product(
-            productRequestDto.productId(),
-            productRequestDto.name(),
-            productRequestDto.price(),
-            productRequestDto.imageURL());
-        productRepository.createProduct(product);
+        Product product = new Product();
+        product.setName(productRequestDto.name());
+        product.setPrice(productRequestDto.price());
+        product.setImageURL(productRequestDto.imageURL());
+        productRepository.save(product);
 
         return productToResponseDto(product);
     }
@@ -61,29 +60,27 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductResponseDto updateProduct(long productId,
         ProductUpdateRequestDto productUpdateRequestDto) {
-        if (!containsProduct(productId)) {
+        if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("상품을 찾을 수 없습니다");
         }
-        Product product = new Product(
-            productId,
-            productUpdateRequestDto.name(),
-            productUpdateRequestDto.price(),
-            productUpdateRequestDto.imageURL());
-        productRepository.updateProduct(product);
+        Product product = productRepository.findById(productId).orElseThrow();
+        product.setName(productUpdateRequestDto.name());
+        product.setPrice(productUpdateRequestDto.price());
+        product.setImageURL(productUpdateRequestDto.imageURL());
+        productRepository.save(product);
 
         return productToResponseDto(product);
     }
 
 
     public void deleteProduct(long productId) {
-        if (!containsProduct(productId)) {
+        if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("상품을 찾을 수 없습니다");
         }
-        productRepository.delete(productId);
+        productRepository.delete(
+            productRepository.findById(productId).orElseThrow());
     }
 
 
-    public boolean containsProduct(long productId) {
-        return productRepository.productExists(productId);
-    }
+
 }

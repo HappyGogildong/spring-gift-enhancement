@@ -32,4 +32,15 @@ public class Product {
     @Column(nullable = false)
     String imageURL;
 
+    public Long getId() { return productId; }
+
+    public String getName() { return name;}
+    public void setName(String name) {this.name = name;}
+
+    public int getPrice() {return price;}
+    public void setPrice(int price) {this.price = price;}
+
+    public String getImageURL() { return imageURL;}
+    public void setImageURL(String imageURL) {this.imageURL = imageURL;}
+
 }
