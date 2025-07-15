@@ -10,6 +10,7 @@ import gift.exception.EmailDuplicationException;
 import gift.exception.InvalidPasswordException;
 import gift.exception.MemberNotFoundException;
 import gift.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +36,11 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    @Transactional
     @Override
     public TokenResponseDto registerAndReturnToken(RegisterRequestDto registerRequestDto) {
 
-        if (memberRepository.findMemberByEmail(registerRequestDto.email()).isEmpty()) {
+        if (memberRepository.findMemberByEmail(registerRequestDto.email()).isPresent()) {
             throw new EmailDuplicationException("중복된 이메일입니다");
         }
 

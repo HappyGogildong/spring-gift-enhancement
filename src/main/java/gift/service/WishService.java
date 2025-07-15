@@ -13,6 +13,10 @@ public interface WishService {
 
     List<Wish> getWishList(String email);
 
+    Long getProductIdByName(String productName);
+
+    Long getMemberIdByEmail(String memberName);
+
     void deleteProduct(String email, Long wishId, WishDeleteRequestDto wishDeleteRequestDto);
 
     void updateProduct(Long wishId, String email, WishUpdateRequestDto wishUpdateRequestDto);

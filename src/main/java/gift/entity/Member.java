@@ -13,24 +13,43 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(nullable = false)
-    String memberRole;
+    private String memberRole;
 
     @Column(unique = true, nullable = false)
-    String email;
+    private String email;
 
     @Column(nullable = false)
-    String password;
+    private String password;
 
-    public String getMemberRole() {return memberRole;}
-    public void setMemberRole(String memberRole) {this.memberRole = memberRole;}
+    public Long getId() {
+        return this.id;
+    }
 
-    public String getEmail() {return email;}
-    public void setEmail(String email) {this.email = email;}
+    public String getMemberRole() {
+        return memberRole;
+    }
 
-    public String getPassword() {return password;}
-    public void setPassword(String password) {this.password = password;}
+    public void setMemberRole(String memberRole) {
+        this.memberRole = memberRole;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }

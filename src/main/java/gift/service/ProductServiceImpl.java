@@ -7,6 +7,7 @@ import gift.entity.Product;
 import gift.exception.KakaoApproveException;
 import gift.exception.ProductNotFoundException;
 import gift.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Transactional
     public ProductResponseDto updateProduct(long productId,
         ProductUpdateRequestDto productUpdateRequestDto) {
         if (!productRepository.existsById(productId)) {
@@ -73,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Transactional
     public void deleteProduct(long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("상품을 찾을 수 없습니다");
@@ -80,7 +83,6 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(
             productRepository.findById(productId).orElseThrow());
     }
-
 
 
 }

@@ -17,30 +17,47 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long productId;
+    private Long productId;
 
     @Pattern(regexp = "^[가-힣a-zA-Z0-9 ()\\[\\]+\\-&/_]{1,15}$",
-             message = "15자 이내의 한글, 영문, (), [], +, -, &, /, _만 사용할 수 있습니다")
+        message = "15자 이내의 한글, 영문, (), [], +, -, &, /, _만 사용할 수 있습니다")
     @Column(nullable = false)
-    String name;
+    private String name;
 
     @Min(value = 1, message = "가격은 1원 이상이어야 합니다")
     @Column(nullable = false)
-    Integer price;
+    private Integer price;
 
     @URL(message = "URL형식만 입력할 수 있습니다")
     @Column(nullable = false)
-    String imageURL;
+    private String imageURL;
 
-    public Long getId() { return productId; }
+    public Long getId() {
+        return productId;
+    }
 
-    public String getName() { return name;}
-    public void setName(String name) {this.name = name;}
+    public String getName() {
+        return name;
+    }
 
-    public int getPrice() {return price;}
-    public void setPrice(int price) {this.price = price;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getImageURL() { return imageURL;}
-    public void setImageURL(String imageURL) {this.imageURL = imageURL;}
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 
 }

@@ -58,6 +58,17 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
+    @ExceptionHandler(WishNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDto> handleWishNotFoundException(
+        WishNotFoundException e) {
+
+        ExceptionResponseDto exception = ExceptionResponseDto.singleIssue(e.getMessage(),
+            LocalDateTime.now());
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exception);
+    }
+
+    @ResponseBody
     @ExceptionHandler(UnauthorizedWishListException.class)
     public ResponseEntity<ExceptionResponseDto> handleUnauthorizedWishList(
         UnauthorizedWishListException e) {
