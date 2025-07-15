@@ -9,8 +9,6 @@ import gift.entity.Wish;
 import gift.exception.ProductNotFoundException;
 import gift.exception.UnauthorizedWishListException;
 import gift.exception.WishNotFoundException;
-import gift.repository.MemberRepository;
-import gift.repository.ProductRepository;
 import gift.repository.WishRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -20,28 +18,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class WishServiceImpl implements WishService {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final WishRepository wishRepository;
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public WishServiceImpl(MemberRepository memberRepository,
-        WishRepository wishJdbcRepository, ProductRepository productRepository) {
-        this.memberRepository = memberRepository;
+    public WishServiceImpl(MemberService memberRepository,
+        WishRepository wishJdbcRepository, ProductService productService) {
+        this.memberService = memberRepository;
         this.wishRepository = wishJdbcRepository;
-        this.productRepository = productRepository;
-    }
-
-    @Override
-    public Long getMemberIdByEmail(String email) {
-        return memberRepository.findMemberByEmail(email).getId();
+        this.productService = productService;
     }
 
     @Transactional
     @Override
     public WishIdResponseDto addProduct(WishAddRequestDto wishAddRequestDto, String email) {
         Wish wish = new Wish();
-        wish.setMember(memberRepository.findMemberByEmail(email));
-        wish.setProduct(productRepository.findByName(wishAddRequestDto.productName()));
+        wish.setMember(memberService.findMemberByEmail(email));
+        wish.setProduct(productService.findByName(wishAddRequestDto.productName()));
         wish.setQuantity(1);
 
         if (wish.getProduct() == null) {
@@ -54,7 +47,7 @@ public class WishServiceImpl implements WishService {
 
     @Transactional
     public List<WishResponseDto> getWishList(String email) {
-        Long memberId = getMemberIdByEmail(email);
+        Long memberId = memberService.getMemberIdByEmail(email);
         List<Wish> wishes = wishRepository.findByMemberId(memberId);
         return wishes.stream()
             .map(WishResponseDto::new)
@@ -68,7 +61,7 @@ public class WishServiceImpl implements WishService {
         Long wishId,
         WishDeleteRequestDto wishDeleteRequestDto) {
 
-        if (!memberRepository.findMemberByEmail(email).getId()
+        if (!memberService.findMemberByEmail(email).getId()
             .equals(wishId)) {
             throw new UnauthorizedWishListException("사용자의 위시 리스트가 아님");
         }
@@ -85,7 +78,7 @@ public class WishServiceImpl implements WishService {
         String email,
         WishUpdateRequestDto wishUpdateRequestDto) {
 
-        if (!memberRepository.findMemberByEmail(email).getId()
+        if (!memberService.findMemberByEmail(email).getId()
             .equals(wishId)) {
             throw new UnauthorizedWishListException("사용자의 위시 리스트가 아님");
         }

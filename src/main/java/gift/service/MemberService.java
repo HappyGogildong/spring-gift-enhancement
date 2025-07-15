@@ -13,4 +13,8 @@ public interface MemberService {
 
     Member getMemberWithEncodedPassword(RegisterRequestDto registerRequestDto);
 
+    Long getMemberIdByEmail(String email);
+
+    Member findMemberByEmail(String email);
 }
+

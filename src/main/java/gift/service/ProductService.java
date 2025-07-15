@@ -19,4 +19,5 @@ interface ProductService {
 
     List<Product> getAllProducts();
 
+    Product findByName(String name);
 }
