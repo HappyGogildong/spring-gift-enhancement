@@ -6,8 +6,6 @@ import gift.dto.request.WishUpdateRequestDto;
 import gift.dto.response.WishIdResponseDto;
 import gift.entity.Wish;
 import gift.exception.UnauthorizedWishListException;
-import gift.repository.UserJdbcRepository;
-import gift.repository.WishJdbcRepository;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
