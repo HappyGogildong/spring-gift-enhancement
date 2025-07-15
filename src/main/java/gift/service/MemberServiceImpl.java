@@ -37,6 +37,15 @@ public class MemberServiceImpl implements MemberService {
         return member;
     }
 
+    public Long getMemberIdByEmail(String email) {
+        return memberRepository.findMemberByEmail(email).getId();
+    }
+
+    @Override
+    public Member findMemberByEmail(String email) {
+        return memberRepository.findMemberByEmail(email);
+    }
+
     @Transactional
     @Override
     public TokenResponseDto registerAndReturnToken(RegisterRequestDto registerRequestDto) {

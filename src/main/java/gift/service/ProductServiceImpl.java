@@ -43,6 +43,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
+    @Override
+    public Product findByName(String name) {
+        return productRepository.findByName(name);
+    }
 
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
         if (productRequestDto.name().contains(KAKAO_KEYWORD)) {
