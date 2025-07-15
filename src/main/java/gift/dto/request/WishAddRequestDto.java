@@ -6,7 +6,6 @@ public record WishAddRequestDto(
 
     @NotBlank
     String productName
-
 ) {
 
 }

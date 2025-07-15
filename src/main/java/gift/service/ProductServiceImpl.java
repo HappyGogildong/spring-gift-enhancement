@@ -31,7 +31,6 @@ public class ProductServiceImpl implements ProductService {
             product.getImageURL());
     }
 
-
     public Product getProduct(long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("상품을 찾을 수 없습니다");
@@ -42,7 +41,6 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
-
 
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
         if (productRequestDto.name().contains(KAKAO_KEYWORD)) {
@@ -57,7 +55,6 @@ public class ProductServiceImpl implements ProductService {
 
         return productToResponseDto(product);
     }
-
 
     @Transactional
     public ProductResponseDto updateProduct(long productId,
@@ -74,7 +71,6 @@ public class ProductServiceImpl implements ProductService {
         return productToResponseDto(product);
     }
 
-
     @Transactional
     public void deleteProduct(long productId) {
         if (!productRepository.existsById(productId)) {
@@ -83,6 +79,4 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(
             productRepository.findById(productId).orElseThrow());
     }
-
-
 }
