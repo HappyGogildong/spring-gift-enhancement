@@ -62,10 +62,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductResponseDto updateProduct(long productId,
         ProductUpdateRequestDto productUpdateRequestDto) {
-        if (!productRepository.existsById(productId)) {
-            throw new ProductNotFoundException("상품을 찾을 수 없습니다");
-        }
-        Product product = productRepository.findById(productId).orElseThrow();
+
+        Product product = getProduct(productId);
         product.setName(productUpdateRequestDto.name());
         product.setPrice(productUpdateRequestDto.price());
         product.setImageURL(productUpdateRequestDto.imageURL());
