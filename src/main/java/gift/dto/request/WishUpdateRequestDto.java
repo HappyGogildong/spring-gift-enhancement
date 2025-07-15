@@ -7,8 +7,8 @@ public record WishUpdateRequestDto(
 
     @NotBlank
     String productName,
-    
-    @Min(0)
+
+    @Min(1)
     int quantity
 ) {
 
