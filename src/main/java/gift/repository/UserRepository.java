@@ -1,13 +1,13 @@
 package gift.repository;
 
-import gift.entity.User;
+import gift.entity.Member;
 import java.util.Optional;
 
 public interface UserRepository {
 
-    void createUser(User user);
+    void createUser(Member member);
 
-    Optional<User> findUserByEmail(String email);
+    Optional<Member> findUserByEmail(String email);
 
     Long findUserIdByEmail(String email);
 

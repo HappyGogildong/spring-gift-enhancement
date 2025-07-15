@@ -4,7 +4,7 @@ import gift.dto.request.WishAddRequestDto;
 import gift.dto.request.WishDeleteRequestDto;
 import gift.dto.request.WishUpdateRequestDto;
 import gift.dto.response.WishIdResponseDto;
-import gift.entity.WishProduct;
+import gift.entity.Wish;
 import gift.exception.UnauthorizedWishListException;
 import gift.repository.UserJdbcRepository;
 import gift.repository.WishJdbcRepository;
@@ -33,7 +33,7 @@ public class WishServiceImpl implements WishService {
     }
 
     @Override
-    public List<WishProduct> getWishList(String email) {
+    public List<Wish> getWishList(String email) {
         return wishJdbcRepository.getWishList(email);
     }
 

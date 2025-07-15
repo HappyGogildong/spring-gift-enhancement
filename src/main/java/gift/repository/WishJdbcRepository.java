@@ -1,7 +1,7 @@
 package gift.repository;
 
 import gift.entity.Product;
-import gift.entity.WishProduct;
+import gift.entity.Wish;
 import gift.exception.ProductNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +29,8 @@ public class WishJdbcRepository implements WishRepository {
         this.productJdbcRepository = productJdbcRepository;
     }
 
-    private RowMapper<WishProduct> wishRowMapper() {
-        return (rs, rowNum) -> new WishProduct(
+    private RowMapper<Wish> wishRowMapper() {
+        return (rs, rowNum) -> new Wish(
             rs.getString("product_name"),
             rs.getInt("quantity")
         );
@@ -55,7 +55,7 @@ public class WishJdbcRepository implements WishRepository {
     }
 
     @Override
-    public List<WishProduct> getWishList(String email) {
+    public List<Wish> getWishList(String email) {
         long userId = userJdbcRepository.findUserIdByEmail(email);
 
         return jdbcTemplate.query("select * from wishes where user_id = ?",

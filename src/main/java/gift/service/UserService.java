@@ -3,7 +3,7 @@ package gift.service;
 import gift.dto.request.LoginRequestDto;
 import gift.dto.request.RegisterRequestDto;
 import gift.dto.response.TokenResponseDto;
-import gift.entity.User;
+import gift.entity.Member;
 import java.util.Optional;
 
 public interface UserService {
@@ -12,8 +12,8 @@ public interface UserService {
 
     TokenResponseDto login(LoginRequestDto loginRequest);
 
-    User userWithEncodedPassword(RegisterRequestDto registerRequestDto);
+    Member userWithEncodedPassword(RegisterRequestDto registerRequestDto);
 
-    Optional<User> getUserByEmail(String email);
+    Optional<Member> getUserByEmail(String email);
 
 }

@@ -1,7 +1,7 @@
 package gift.repository;
 
 
-import gift.entity.User;
+import gift.entity.Member;
 import gift.exception.UserNotFoundException;
 import java.util.Map;
 import java.util.Optional;
@@ -24,8 +24,8 @@ public class UserJdbcRepository implements UserRepository {
             .usingColumns("user_role", "email", "password");
     }
 
-    private RowMapper<User> userRowMapper() {
-        return (rs, rowNum) -> new User(
+    private RowMapper<Member> userRowMapper() {
+        return (rs, rowNum) -> new Member(
             rs.getString("user_role"),
             rs.getString("email"),
             rs.getString("password")
@@ -33,23 +33,23 @@ public class UserJdbcRepository implements UserRepository {
     }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(Member member) {
 
         Map<String, Object> parameters = Map.of(
-            "user_role", user.userRole(),
-            "email", user.email(),
-            "password", user.password());
+            "user_role", member.userRole(),
+            "email", member.email(),
+            "password", member.password());
 
         jdbcInsert.execute(parameters);
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
+    public Optional<Member> findUserByEmail(String email) {
         try {
-            User user = jdbcTemplate.queryForObject("select * from users where email = ?",
+            Member member = jdbcTemplate.queryForObject("select * from users where email = ?",
                 userRowMapper(),
                 email);
-            return Optional.ofNullable(user);
+            return Optional.ofNullable(member);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }

@@ -1,13 +1,13 @@
 package gift.repository;
 
-import gift.entity.WishProduct;
+import gift.entity.Wish;
 import java.util.List;
 
 public interface WishRepository {
 
     long addProduct(String productName, String email);
 
-    List<WishProduct> getWishList(String email);
+    List<Wish> getWishList(String email);
 
     int deleteProduct(Long wishId, String productName);
 
