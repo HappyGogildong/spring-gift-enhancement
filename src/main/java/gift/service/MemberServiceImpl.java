@@ -6,6 +6,7 @@ import gift.dto.request.LoginRequestDto;
 import gift.dto.request.RegisterRequestDto;
 import gift.dto.response.TokenResponseDto;
 import gift.entity.Member;
+import gift.entity.MemberRole;
 import gift.exception.EmailDuplicationException;
 import gift.exception.InvalidPasswordException;
 import gift.exception.MemberNotFoundException;
@@ -31,7 +32,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = new Member();
         member.setEmail(registerRequestDto.email());
         member.setPassword(encodedPassword);
-        member.setMemberRole(registerRequestDto.memberRole());
+        member.setMemberRole(
+            MemberRole.valueOf(registerRequestDto.memberRole()));
         return member;
 
     }
