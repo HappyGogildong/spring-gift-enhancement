@@ -47,9 +47,9 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(MemberNotFoundException.class)
     public ResponseEntity<ExceptionResponseDto> handleUserNotFoundException(
-        UserNotFoundException e) {
+        MemberNotFoundException e) {
 
         ExceptionResponseDto exception = ExceptionResponseDto.singleIssue(e.getMessage(),
             LocalDateTime.now());

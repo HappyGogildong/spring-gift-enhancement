@@ -16,7 +16,7 @@ public class Member {
     Long id;
 
     @Column(nullable = false)
-    String userRole;
+    String memberRole;
 
     @Column(unique = true, nullable = false)
     String email;
@@ -24,8 +24,8 @@ public class Member {
     @Column(nullable = false)
     String password;
 
-    public String getUserRole() {return userRole;}
-    public void setUserRole(String userRole) {this.userRole = userRole;}
+    public String getMemberRole() {return memberRole;}
+    public void setMemberRole(String memberRole) {this.memberRole = memberRole;}
 
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}

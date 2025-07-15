@@ -6,14 +6,12 @@ import gift.dto.response.TokenResponseDto;
 import gift.entity.Member;
 import java.util.Optional;
 
-public interface UserService {
+public interface MemberService {
 
     TokenResponseDto registerAndReturnToken(RegisterRequestDto registerRequestDto);
 
     TokenResponseDto login(LoginRequestDto loginRequest);
 
-    Member userWithEncodedPassword(RegisterRequestDto registerRequestDto);
-
-    Optional<Member> getUserByEmail(String email);
+    Member memberWithEncodedPassword(RegisterRequestDto registerRequestDto);
 
 }
