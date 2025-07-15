@@ -4,6 +4,7 @@ package gift.jpaTest;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import gift.entity.Member;
+import gift.entity.MemberRole;
 import gift.entity.Product;
 import gift.entity.Wish;
 import gift.repository.MemberRepository;
@@ -44,7 +45,7 @@ public class WishTest {
         productRepository.saveAndFlush(product);
 
         Member member = new Member();
-        member.setMemberRole("user");
+        member.setMemberRole(MemberRole.valueOf("user"));
         member.setEmail("test1@gmail.com");
         member.setPassword("testpassword");
 

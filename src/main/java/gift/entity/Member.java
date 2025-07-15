@@ -2,12 +2,13 @@ package gift.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "member")
@@ -18,8 +19,8 @@ public class Member {
     private Long id;
 
     @Column(nullable = false)
-    @Pattern(regexp = "^(user|manager)$", message = "역할은 'user' 또는 'manager'만 가능합니다.")
-    private String memberRole;
+    @Enumerated(EnumType.STRING)
+    private MemberRole memberRole;
 
     @Column(unique = true, nullable = false)
     @Email(message = "유효한 이메일 형식이어야 합니다")
@@ -32,11 +33,11 @@ public class Member {
         return this.id;
     }
 
-    public String getMemberRole() {
+    public MemberRole getMemberRole() {
         return memberRole;
     }
 
-    public void setMemberRole(String memberRole) {
+    public void setMemberRole(MemberRole memberRole) {
         this.memberRole = memberRole;
     }
 

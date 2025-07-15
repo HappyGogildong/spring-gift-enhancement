@@ -3,6 +3,7 @@ package gift.jpaTest;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import gift.entity.Member;
+import gift.entity.MemberRole;
 import gift.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -26,7 +27,7 @@ public class MemberTest {
     @BeforeEach
     public void setUp() {
         Member member = new Member();
-        member.setMemberRole("user");
+        member.setMemberRole(MemberRole.valueOf("user"));
         member.setEmail("test1@gmail.com");
         member.setPassword("testpassword");
 
@@ -43,7 +44,7 @@ public class MemberTest {
     @DisplayName("이메일 유효성 검증 오류")
     public void 유효하지_않은_이메일_회원가입시도_오류발생() {
         Member member = new Member();
-        member.setMemberRole("user");
+        member.setMemberRole(MemberRole.valueOf("user"));
         member.setEmail("testgmailcom");
         member.setPassword("testpassword");
 
@@ -62,11 +63,11 @@ public class MemberTest {
     @DisplayName("유효하지_않은_회원_역할")
     public void 유효하지_않은_회원_역할() {
         Member member = new Member();
-        member.setMemberRole("superUser");
+        member.setMemberRole(MemberRole.valueOf("superUser"));
         member.setEmail("test2@gmail.com");
         member.setPassword("testpassword");
 
-        assertThrows(ConstraintViolationException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             memberRepository.saveAndFlush(member);
         });
     }
