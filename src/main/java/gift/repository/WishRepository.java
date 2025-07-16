@@ -1,16 +1,12 @@
 package gift.repository;
 
-import gift.entity.WishProduct;
+import gift.entity.Wish;
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface WishRepository {
+@Repository
+public interface WishRepository extends JpaRepository<Wish, Long> {
 
-    long addProduct(String productName, String email);
-
-    List<WishProduct> getWishList(String email);
-
-    int deleteProduct(Long wishId, String productName);
-
-    int updateWish(Long wishId, String productName, int quantity);
-
+    List<Wish> findByMemberId(Long memberId);
 }

@@ -1,6 +1,6 @@
 package gift.auth;
 
-import gift.entity.User;
+import gift.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -18,13 +18,13 @@ public class JwtTokenHandler {
         this.secretKey = secretKey;
     }
 
-    public String createToken(User user) {
+    public String createToken(Member member) {
         return Jwts.builder()
             .header()
             .add("typ", "JWT")
             .and()
-            .claim("userRole", user.userRole())
-            .claim("email", user.email())
+            .claim("userRole", member.getMemberRole())
+            .claim("email", member.getEmail())
             .issuedAt(new Date(System.currentTimeMillis()))
             .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) //30분
             .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))

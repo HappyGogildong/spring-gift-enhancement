@@ -1,7 +1,7 @@
 package gift.wishPreProcess;
 
 import gift.auth.JwtTokenHandler;
-import gift.service.UserServiceImpl;
+import gift.service.MemberServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -14,10 +14,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final JwtTokenHandler jwtTokenHandler;
-    private final UserServiceImpl userServiceImpl;
+    private final MemberServiceImpl userServiceImpl;
 
     public LoginMemberArgumentResolver(JwtTokenHandler jwtTokenHandler,
-        UserServiceImpl userServiceImpl) {
+        MemberServiceImpl userServiceImpl) {
         this.jwtTokenHandler = jwtTokenHandler;
         this.userServiceImpl = userServiceImpl;
     }

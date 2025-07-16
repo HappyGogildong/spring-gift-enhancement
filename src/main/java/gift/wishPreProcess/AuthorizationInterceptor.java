@@ -10,8 +10,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
-    private static final String USER_ROLE = "user";
-    private static final String MANAGER_ROLE = "manager";
+    private static final String USER_ROLE = "USER";
+    private static final String MANAGER_ROLE = "MANAGER";
 
     private final JwtTokenHandler jwtTokenHandler;
 
