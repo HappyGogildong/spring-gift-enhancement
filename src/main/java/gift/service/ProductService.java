@@ -17,8 +17,7 @@ interface ProductService {
 
     void deleteProduct(long productId);
 
-    boolean containsProduct(long productId);
-
     List<Product> getAllProducts();
 
+    Product findByName(String name);
 }

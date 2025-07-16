@@ -4,14 +4,14 @@ import gift.dto.request.WishAddRequestDto;
 import gift.dto.request.WishDeleteRequestDto;
 import gift.dto.request.WishUpdateRequestDto;
 import gift.dto.response.WishIdResponseDto;
-import gift.entity.WishProduct;
+import gift.dto.response.WishResponseDto;
 import java.util.List;
 
 public interface WishService {
 
     WishIdResponseDto addProduct(WishAddRequestDto wishAddRequestDto, String email);
 
-    List<WishProduct> getWishList(String email);
+    List<WishResponseDto> getWishList(String email);
 
     void deleteProduct(String email, Long wishId, WishDeleteRequestDto wishDeleteRequestDto);
 

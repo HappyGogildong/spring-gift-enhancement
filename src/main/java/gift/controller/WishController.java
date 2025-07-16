@@ -5,7 +5,7 @@ import gift.dto.request.WishAddRequestDto;
 import gift.dto.request.WishDeleteRequestDto;
 import gift.dto.request.WishUpdateRequestDto;
 import gift.dto.response.WishIdResponseDto;
-import gift.entity.WishProduct;
+import gift.dto.response.WishResponseDto;
 import gift.service.WishServiceImpl;
 import gift.wishPreProcess.LoginMember;
 import jakarta.validation.Valid;
@@ -41,7 +41,7 @@ public class WishController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<WishProduct>> getWishItem(
+    public ResponseEntity<List<WishResponseDto>> getWishItem(
         @LoginMember String userEmail
     ) {
         return ResponseEntity.status(HttpStatus.OK)

@@ -47,9 +47,20 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(MemberNotFoundException.class)
     public ResponseEntity<ExceptionResponseDto> handleUserNotFoundException(
-        UserNotFoundException e) {
+        MemberNotFoundException e) {
+
+        ExceptionResponseDto exception = ExceptionResponseDto.singleIssue(e.getMessage(),
+            LocalDateTime.now());
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exception);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(WishNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDto> handleWishNotFoundException(
+        WishNotFoundException e) {
 
         ExceptionResponseDto exception = ExceptionResponseDto.singleIssue(e.getMessage(),
             LocalDateTime.now());
