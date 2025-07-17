@@ -1,7 +1,6 @@
 package gift.service;
 
 import static gift.constant.PageSize.PAGE_SIZE;
-
 import gift.dto.request.WishAddRequestDto;
 import gift.dto.request.WishDeleteRequestDto;
 import gift.dto.request.WishUpdateRequestDto;

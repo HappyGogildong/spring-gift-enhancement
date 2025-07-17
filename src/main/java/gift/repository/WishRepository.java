@@ -10,5 +10,4 @@ import org.springframework.stereotype.Repository;
 public interface WishRepository extends JpaRepository<Wish, Long> {
 
     Page<Wish> findAllByMemberId(Long memberId, Pageable pageable);
-
 }

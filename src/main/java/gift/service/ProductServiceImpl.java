@@ -1,7 +1,6 @@
 package gift.service;
 
 import static gift.constant.PageSize.PAGE_SIZE;
-
 import gift.dto.request.ProductRequestDto;
 import gift.dto.request.ProductUpdateRequestDto;
 import gift.dto.response.ProductResponseDto;
@@ -36,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
             product.getPrice(),
             product.getImageURL());
     }
-
 
     public Product getProduct(long productId) {
         if (!productRepository.existsById(productId)) {
@@ -84,7 +82,6 @@ public class ProductServiceImpl implements ProductService {
         return productToResponseDto(product);
     }
 
-
     @Transactional
     public void deleteProduct(long productId) {
         if (!productRepository.existsById(productId)) {
@@ -93,6 +90,4 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(
             productRepository.findById(productId).orElseThrow());
     }
-
-
 }
