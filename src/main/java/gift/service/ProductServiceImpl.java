@@ -1,5 +1,7 @@
 package gift.service;
 
+import static gift.constant.PageSize.PAGE_SIZE;
+
 import gift.dto.request.ProductRequestDto;
 import gift.dto.request.ProductUpdateRequestDto;
 import gift.dto.response.ProductResponseDto;
@@ -19,7 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    static final int PAGE_SIZE = 10;
     private final ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRespository) {
@@ -45,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<Product> getAllProducts(int pageNo, String sortBy) {
-        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Direction.DESC, sortBy));
+        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE.getSize(),
+            Sort.by(Direction.DESC, sortBy));
         return productRepository.findAll(pageable).getContent();
     }
 

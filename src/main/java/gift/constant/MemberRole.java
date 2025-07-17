@@ -1,4 +1,4 @@
-package gift.entity;
+package gift.constant;
 
 public enum MemberRole {
 

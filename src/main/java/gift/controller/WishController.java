@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,10 +43,12 @@ public class WishController {
 
     @GetMapping("")
     public ResponseEntity<List<WishResponseDto>> getWishItem(
-        @LoginMember String userEmail
+        @LoginMember String userEmail,
+        @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
+        @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(wishServiceImpl.getWishList(userEmail));
+            .body(wishServiceImpl.getWishList(userEmail, pageNo, sortBy));
     }
 
     @DeleteMapping("/{wishId}")

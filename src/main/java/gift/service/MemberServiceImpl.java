@@ -2,11 +2,11 @@ package gift.service;
 
 
 import gift.auth.JwtTokenHandler;
+import gift.constant.MemberRole;
 import gift.dto.request.LoginRequestDto;
 import gift.dto.request.RegisterRequestDto;
 import gift.dto.response.TokenResponseDto;
 import gift.entity.Member;
-import gift.entity.MemberRole;
 import gift.exception.EmailDuplicationException;
 import gift.exception.InvalidPasswordException;
 import gift.exception.MemberNotFoundException;

@@ -1,5 +1,7 @@
 package gift.service;
 
+import static gift.constant.PageSize.PAGE_SIZE;
+
 import gift.dto.request.WishAddRequestDto;
 import gift.dto.request.WishDeleteRequestDto;
 import gift.dto.request.WishUpdateRequestDto;
@@ -13,6 +15,10 @@ import gift.repository.WishRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -46,9 +52,14 @@ public class WishServiceImpl implements WishService {
     }
 
     @Transactional
-    public List<WishResponseDto> getWishList(String email) {
+    public List<WishResponseDto> getWishList(String email, int pageNo, String sortBy) {
         Long memberId = memberService.getMemberIdByEmail(email);
-        List<Wish> wishes = wishRepository.findByMemberId(memberId);
+
+        Pageable pageable = PageRequest.of(
+            pageNo,
+            PAGE_SIZE.getSize(),
+            Sort.by(Direction.DESC, sortBy));
+        List<Wish> wishes = wishRepository.findAllByMemberId(memberId, pageable).getContent();
         return wishes.stream()
             .map(WishResponseDto::new)
             .collect(Collectors.toList());

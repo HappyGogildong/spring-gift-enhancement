@@ -40,7 +40,7 @@ class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<ProductResponseDto>> getAllProducts(
         @RequestParam(required = false, defaultValue = "0", value = "page") int page,
-        @RequestParam(required = false, defaultValue = "name", value = "sort") String sortBy) {
+        @RequestParam(required = false, defaultValue = "name", value = "sortBy") String sortBy) {
         return new ResponseEntity<>(
             productServiceImpl.getAllProducts(page, sortBy).stream()
                 .map(productServiceImpl::productToResponseDto)
