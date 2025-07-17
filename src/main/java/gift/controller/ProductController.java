@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -37,9 +38,11 @@ class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<ProductResponseDto>> getAllProducts() {
+    public ResponseEntity<List<ProductResponseDto>> getAllProducts(
+        @RequestParam(required = false, defaultValue = "0", value = "page") int page,
+        @RequestParam(required = false, defaultValue = "name", value = "sort") String sortBy) {
         return new ResponseEntity<>(
-            productServiceImpl.getAllProducts().stream()
+            productServiceImpl.getAllProducts(page, sortBy).stream()
                 .map(productServiceImpl::productToResponseDto)
                 .collect(Collectors.toList())
             , HttpStatus.OK);

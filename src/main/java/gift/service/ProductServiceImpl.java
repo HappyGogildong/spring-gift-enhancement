@@ -9,12 +9,17 @@ import gift.exception.ProductNotFoundException;
 import gift.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    static final int PAGE_SIZE = 10;
     private final ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRespository) {
@@ -39,8 +44,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(productId).orElseThrow();
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts(int pageNo, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Direction.DESC, sortBy));
+        return productRepository.findAll(pageable).getContent();
     }
 
     @Override

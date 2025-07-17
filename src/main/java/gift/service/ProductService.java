@@ -17,7 +17,7 @@ interface ProductService {
 
     void deleteProduct(long productId);
 
-    List<Product> getAllProducts();
+    List<Product> getAllProducts(int pageNo, String sortBy);
 
     Product findByName(String name);
 }
