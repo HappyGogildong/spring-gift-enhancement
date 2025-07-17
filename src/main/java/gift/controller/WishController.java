@@ -6,7 +6,7 @@ import gift.dto.request.WishDeleteRequestDto;
 import gift.dto.request.WishUpdateRequestDto;
 import gift.dto.response.WishIdResponseDto;
 import gift.dto.response.WishResponseDto;
-import gift.service.WishServiceImpl;
+import gift.service.WishService;
 import gift.wishPreProcess.LoginMember;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/wishes")
 public class WishController {
 
-    private final WishServiceImpl wishServiceImpl;
+    private final WishService wishService;
 
-    public WishController(WishServiceImpl wishServiceImpl) {
-        this.wishServiceImpl = wishServiceImpl;
+    public WishController(WishService wishService) {
+        this.wishService = wishService;
     }
 
     @PostMapping("")
@@ -38,7 +38,7 @@ public class WishController {
         @LoginMember String userEmail
     ) {
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(wishServiceImpl.addProduct(wishAddRequestDto, userEmail));
+            .body(wishService.addProduct(wishAddRequestDto, userEmail));
     }
 
     @GetMapping("")
@@ -48,7 +48,7 @@ public class WishController {
         @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(wishServiceImpl.getWishList(userEmail, pageNo, sortBy));
+            .body(wishService.getWishList(userEmail, pageNo, sortBy));
     }
 
     @DeleteMapping("/{wishId}")
@@ -57,7 +57,7 @@ public class WishController {
         @LoginMember String userEmail,
         @PathVariable Long wishId) {
 
-        wishServiceImpl.deleteProduct(userEmail, wishId, productName);
+        wishService.deleteProduct(userEmail, wishId, productName);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -67,7 +67,7 @@ public class WishController {
         @LoginMember String userEmail,
         @PathVariable Long wishId
     ) {
-        wishServiceImpl.updateProduct(wishId, userEmail, wishUpdateRequestDto);
+        wishService.updateProduct(wishId, userEmail, wishUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

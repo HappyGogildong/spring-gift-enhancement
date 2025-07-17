@@ -6,9 +6,11 @@ import gift.dto.response.ProductResponseDto;
 import gift.entity.Product;
 import java.util.List;
 
-interface ProductService {
+public interface ProductService {
 
     Product getProduct(long productId);
+
+    ProductResponseDto productToResponseDto(Product product);
 
     ProductResponseDto createProduct(ProductRequestDto productRequestDto);
 
