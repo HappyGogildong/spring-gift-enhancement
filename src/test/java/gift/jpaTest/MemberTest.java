@@ -1,7 +1,6 @@
 package gift.jpaTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import gift.constant.MemberRole;
 import gift.entity.Member;
 import gift.repository.MemberRepository;
