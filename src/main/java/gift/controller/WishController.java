@@ -6,7 +6,7 @@ import gift.dto.request.WishDeleteRequestDto;
 import gift.dto.request.WishUpdateRequestDto;
 import gift.dto.response.WishIdResponseDto;
 import gift.dto.response.WishResponseDto;
-import gift.service.WishServiceImpl;
+import gift.service.WishService;
 import gift.wishPreProcess.LoginMember;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -19,16 +19,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/wishes")
 public class WishController {
 
-    private final WishServiceImpl wishServiceImpl;
+    private final WishService wishService;
 
-    public WishController(WishServiceImpl wishServiceImpl) {
-        this.wishServiceImpl = wishServiceImpl;
+    public WishController(WishService wishService) {
+        this.wishService = wishService;
     }
 
     @PostMapping("")
@@ -37,15 +38,17 @@ public class WishController {
         @LoginMember String userEmail
     ) {
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(wishServiceImpl.addProduct(wishAddRequestDto, userEmail));
+            .body(wishService.addProduct(wishAddRequestDto, userEmail));
     }
 
     @GetMapping("")
     public ResponseEntity<List<WishResponseDto>> getWishItem(
-        @LoginMember String userEmail
+        @LoginMember String userEmail,
+        @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
+        @RequestParam(required = false, defaultValue = "id", value = "sortBy") String sortBy
     ) {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(wishServiceImpl.getWishList(userEmail));
+            .body(wishService.getWishList(userEmail, pageNo, sortBy));
     }
 
     @DeleteMapping("/{wishId}")
@@ -54,7 +57,7 @@ public class WishController {
         @LoginMember String userEmail,
         @PathVariable Long wishId) {
 
-        wishServiceImpl.deleteProduct(userEmail, wishId, productName);
+        wishService.deleteProduct(userEmail, wishId, productName);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -64,7 +67,7 @@ public class WishController {
         @LoginMember String userEmail,
         @PathVariable Long wishId
     ) {
-        wishServiceImpl.updateProduct(wishId, userEmail, wishUpdateRequestDto);
+        wishService.updateProduct(wishId, userEmail, wishUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

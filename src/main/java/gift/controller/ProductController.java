@@ -3,7 +3,7 @@ package gift.controller;
 import gift.dto.request.ProductRequestDto;
 import gift.dto.request.ProductUpdateRequestDto;
 import gift.dto.response.ProductResponseDto;
-import gift.service.ProductServiceImpl;
+import gift.service.ProductService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -23,24 +24,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api")
 class ProductController {
 
-    private final ProductServiceImpl productServiceImpl;
+    private final ProductService productService;
 
-    public ProductController(ProductServiceImpl productServiceImpl) {
-        this.productServiceImpl = productServiceImpl;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/products/{productId}")
     public ResponseEntity<ProductResponseDto> getProduct(@PathVariable long productId) {
         return new ResponseEntity<>(
-            productServiceImpl.productToResponseDto(productServiceImpl.getProduct(productId)),
+            productService.productToResponseDto(productService.getProduct(productId)),
             HttpStatus.OK);
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<ProductResponseDto>> getAllProducts() {
+    public ResponseEntity<List<ProductResponseDto>> getAllProducts(
+        @RequestParam(required = false, defaultValue = "0", value = "page") int page,
+        @RequestParam(required = false, defaultValue = "name", value = "sortBy") String sortBy) {
         return new ResponseEntity<>(
-            productServiceImpl.getAllProducts().stream()
-                .map(productServiceImpl::productToResponseDto)
+            productService.getAllProducts(page, sortBy).stream()
+                .map(productService::productToResponseDto)
                 .collect(Collectors.toList())
             , HttpStatus.OK);
     }
@@ -48,7 +51,7 @@ class ProductController {
     @PostMapping("/products")
     public ResponseEntity<ProductResponseDto> createProduct(
         @RequestBody @Valid ProductRequestDto productRequestDto) {
-        return new ResponseEntity<>(productServiceImpl.createProduct(productRequestDto),
+        return new ResponseEntity<>(productService.createProduct(productRequestDto),
             HttpStatus.CREATED);
     }
 
@@ -58,13 +61,13 @@ class ProductController {
         @RequestBody @Valid ProductUpdateRequestDto productUpdateRequestDto) {
 
         return new ResponseEntity<>(
-            productServiceImpl.updateProduct(productId, productUpdateRequestDto), HttpStatus.OK);
+            productService.updateProduct(productId, productUpdateRequestDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable long productId) {
 
-        productServiceImpl.deleteProduct(productId);
+        productService.deleteProduct(productId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -1,5 +1,6 @@
 package gift.service;
 
+import static gift.constant.PageSize.PAGE_SIZE;
 import gift.dto.request.ProductRequestDto;
 import gift.dto.request.ProductUpdateRequestDto;
 import gift.dto.response.ProductResponseDto;
@@ -9,6 +10,10 @@ import gift.exception.ProductNotFoundException;
 import gift.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 
@@ -38,8 +43,15 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(productId).orElseThrow();
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts(int pageNo, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE.getSize(),
+            Sort.by(Direction.DESC, sortBy));
+        return productRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public Product findByName(String name) {
+        return productRepository.findByName(name);
     }
 
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
@@ -55,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
 
         return productToResponseDto(product);
     }
+
 
     @Transactional
     public ProductResponseDto updateProduct(long productId,

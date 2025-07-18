@@ -1,5 +1,6 @@
 package gift.entity;
 
+import gift.constant.MemberRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

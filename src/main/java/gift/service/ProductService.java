@@ -6,9 +6,11 @@ import gift.dto.response.ProductResponseDto;
 import gift.entity.Product;
 import java.util.List;
 
-interface ProductService {
+public interface ProductService {
 
     Product getProduct(long productId);
+
+    ProductResponseDto productToResponseDto(Product product);
 
     ProductResponseDto createProduct(ProductRequestDto productRequestDto);
 
@@ -17,7 +19,7 @@ interface ProductService {
 
     void deleteProduct(long productId);
 
-    List<Product> getAllProducts();
-
+    List<Product> getAllProducts(int pageNo, String sortBy);
+  
     Product findByName(String name);
 }
