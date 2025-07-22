@@ -1,6 +1,7 @@
 package gift.service;
 
 import static gift.constant.PageSize.PAGE_SIZE;
+
 import gift.dto.request.ProductRequestDto;
 import gift.dto.request.ProductUpdateRequestDto;
 import gift.dto.response.ProductResponseDto;
@@ -36,10 +37,15 @@ public class ProductServiceImpl implements ProductService {
             product.getImageURL());
     }
 
-    public Product getProduct(long productId) {
+    @Override
+    public void productExist(long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("상품을 찾을 수 없습니다");
         }
+    }
+
+    public Product getProduct(long productId) {
+        productExist(productId);
         return productRepository.findById(productId).orElseThrow();
     }
 

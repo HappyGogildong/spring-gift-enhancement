@@ -105,6 +105,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);
     }
 
+    @ResponseBody
+    @ExceptionHandler(OptionNameDuplicationException.class)
+    public ResponseEntity<ExceptionResponseDto> handleOptionNameDuplicationException(
+        OptionNameDuplicationException e
+    ) {
+        ExceptionResponseDto exception = ExceptionResponseDto.singleIssue(e.getMessage(),
+            LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(OptionNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDto> handleOptionNotFoundException(
+        OptionNotFoundException e
+    ) {
+        ExceptionResponseDto exception = ExceptionResponseDto.singleIssue(e.getMessage(),
+            LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
+    }
+
     @ExceptionHandler(KakaoApproveException.class)
     public String handleKakaoApproveException(
         KakaoApproveException e,

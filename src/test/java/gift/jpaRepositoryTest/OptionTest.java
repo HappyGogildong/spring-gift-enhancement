@@ -1,9 +1,10 @@
-package gift.jpaTest;
-
+package gift.jpaRepositoryTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import gift.entity.Option;
 import gift.entity.Product;
+import gift.repository.OptionRepository;
 import gift.repository.ProductRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -16,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-public class ProductTest {
+public class OptionTest {
 
+    @Autowired
+    private OptionRepository optionRepository;
     @Autowired
     private ProductRepository productRepository;
 
@@ -36,43 +39,33 @@ public class ProductTest {
     @AfterEach
     public void tearDown() {
         em.clear();
+        optionRepository.deleteAll();
         productRepository.deleteAll();
     }
 
     @Test
-    @DisplayName("잘못된 상품명")
-    public void 잘못된_상품명() {
-        Product product = new Product();
-        product.setName("너무긴상품명은조금아닌것같은데요");
-        product.setPrice(123);
-        product.setImageURL("https://imamamger.com");
+    @DisplayName("잘못된 옵션명")
+    public void 잘못된_옵션명() {
+        Option option = new Option();
+        Product product = productRepository.findById(1L).get();
+        option.setName("이런 옵션 안옵션!@#$^&$%^%*^&*(_)__*)&%^$%#$");
+        option.setProduct(product);
+        option.setQuantity(12);
         assertThrows(ConstraintViolationException.class, () -> {
-            productRepository.saveAndFlush(product);
+            optionRepository.saveAndFlush(option);
         });
     }
 
     @Test
-    @DisplayName("잘못된 가격")
-    public void 잘못된_가격() {
-        Product product = new Product();
-        product.setName("테스트상품1");
-        product.setPrice(0);
-        product.setImageURL("https://imamamger.com");
+    @DisplayName("잘못된 수량")
+    public void 잘못된_수량() {
+        Option option = new Option();
+        Product product = productRepository.findById(1L).get();
+        option.setName("옵션명1");
+        option.setProduct(product);
+        option.setQuantity(0);
         assertThrows(ConstraintViolationException.class, () -> {
-            productRepository.saveAndFlush(product);
+            optionRepository.saveAndFlush(option);
         });
     }
-
-    @Test
-    @DisplayName("잘못된 이미지 URL")
-    public void 잘못된_이미지_URL() {
-        Product product = new Product();
-        product.setName("테스트상품1");
-        product.setPrice(123);
-        product.setImageURL("picture");
-        assertThrows(ConstraintViolationException.class, () -> {
-            productRepository.saveAndFlush(product);
-        });
-    }
-
 }
